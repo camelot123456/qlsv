@@ -1,3 +1,4 @@
+huong dan thao tac github
 git init
 git config user.name "Bao Nguyen"
 git config user.email "nguyensybao1403.com"
