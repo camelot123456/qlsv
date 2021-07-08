@@ -22,6 +22,7 @@ public class AbstractModel<T> {
 	private String sortName;
 	private String sortBy;
 	
+	private String type;
 
 	public String getSortName() {
 		return sortName;
@@ -125,6 +126,14 @@ public class AbstractModel<T> {
 
 	public void setTotalItem(Integer totalItem) {
 		this.totalItem = totalItem;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

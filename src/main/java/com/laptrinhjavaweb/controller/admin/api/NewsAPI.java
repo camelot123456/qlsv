@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laptrinhjavaweb.models.NewsModel;
+import com.laptrinhjavaweb.models.UserModel;
 import com.laptrinhjavaweb.service.INewsService;
 import com.laptrinhjavaweb.utils.HttpUtil;
+import com.laptrinhjavaweb.utils.SessionUtil;
 
 @WebServlet(urlPatterns = { "/api-admin-new" })
 public class NewsAPI extends HttpServlet {
@@ -32,6 +34,8 @@ public class NewsAPI extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
 		NewsModel newsModel = HttpUtil.of(req.getReader()).toModel(NewsModel.class);//lấy dữ liệu từ form, chuyển dữ liệu json -> sql
+		newsModel.setCreatedBy(((UserModel) SessionUtil.getInstance().getValue(req, "USERMODEL")).getFullname());
+		
 		newsModel = newsService.save(newsModel);
 		mapper.writeValue(resp.getOutputStream(), newsModel);
 	}
@@ -43,6 +47,8 @@ public class NewsAPI extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
 		NewsModel updateNews = HttpUtil.of(req.getReader()).toModel(NewsModel.class);//lấy dữ liệu từ form, chuyển dữ liệu json -> sql
+		updateNews.setModifiedBy(((UserModel) SessionUtil.getInstance().getValue(req, "USERMODEL")).getFullname());
+		
 		updateNews = newsService.update(updateNews);
 		mapper.writeValue(resp.getOutputStream(), updateNews);
 	}
